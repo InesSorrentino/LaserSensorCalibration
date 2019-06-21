@@ -46,6 +46,7 @@ coefficients = [
 %% Convert conic coefficients to ellipse parameters
 % Convert to geometric radii, and centers
 thetarad = 0.5*atan2(coefficients(2),coefficients(1) - coefficients(3));
+thetarad = thetarad + pi/2;
 
 cost = cos(thetarad);
 sint = sin(thetarad);

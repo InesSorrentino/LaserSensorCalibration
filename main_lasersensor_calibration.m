@@ -25,4 +25,6 @@ data7.Si1_a_ij = [data7.chords(1:2:end,1), zeros(size(data5.chords,1)/2,1), data
 data7.Si1_b_ij = [data7.chords(2:2:end,1), zeros(size(data5.chords,1)/2,1), data7.chords(2:2:end,2)];
 
 %% Compute average chord direction
+[data5.B_T_EEi, data5.B_R_EEi, data5.Si_q, data5.B_D_i, data5.Si_D_i] = sensingDataCalculation(data5);
+[data6.B_T_EEi, data6.B_R_EEi, data6.Si_q, data6.B_D_i, data6.Si_D_i] = sensingDataCalculation(data6);
 [data7.B_T_EEi, data7.B_R_EEi, data7.Si_q, data7.B_D_i, data7.Si_D_i] = sensingDataCalculation(data7);
