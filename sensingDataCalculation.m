@@ -26,6 +26,34 @@ Si1r_endpoints_z_ij(:,1) = [Si1r_a_ij(3,:)'; Si1r_b_ij(3,:)'];
 [parameters, coefficients] = fitEllipse(Si1r_endpoints_x_ij, Si1r_endpoints_z_ij);
 
 % Plot fitted ellipse
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Si1r_endpoints_x_ij_orig(:,1) = [data.Si1_a_ij(:,1); data.Si1_b_ij(:,1)];
+Si1r_endpoints_z_ij_orig(:,1) = [data.Si1_a_ij(:,3); data.Si1_b_ij(:,3)];
+parameters1 = fitEllipse(Si1r_endpoints_x_ij_orig, Si1r_endpoints_z_ij_orig);
+% Plot fitted ellipse
+Cx1 = parameters1(1);
+Cz1 = parameters1(2);
+Rx1 = parameters1(3);
+Rz1 = parameters1(4);
+theta1 = parameters1(5);
+angle1 = linspace(0,2*pi);
+X_ell1 = Rx1 * cos(angle1);
+Z_ell1 = Rz1 * sin(angle1);
+nx1 = X_ell1 * cos(theta1) - Z_ell1 * sin(theta1) + Cx1;
+nz1 = X_ell1 * sin(theta1) + Z_ell1 * cos(theta1) + Cz1;
+
+figure,
+subplot(2,1,1)
+plot(nx1, nz1, 'o')
+hold on
+for ii = 1 : size(Si1r_b_ij,2)
+  line([data.Si1_a_ij(ii,1), data.Si1_b_ij(ii,1)], [data.Si1_a_ij(ii,3), data.Si1_b_ij(ii,3)], 'Color', 'red');
+end
+xlabel('x');
+ylabel('z');
+title('Ellipse and chords');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 Cx = parameters(1);
 Cz = parameters(2);
 Rx = parameters(3);
@@ -36,15 +64,18 @@ X_ell = Rx * cos(angle);
 Z_ell = Rz * sin(angle);
 nx = X_ell * cos(theta) - Z_ell * sin(theta) + Cx;
 nz = X_ell * sin(theta) + Z_ell * cos(theta) + Cz;
-% figure,
-% plot(nx, nz, 'o');
-% xlabel('x');
-% ylabel('z');
-% title('Fitted ellipse in sensor frame');
-% hold on;
-% for ii = 1 : size(Si1r_b_ij,2)
-%   line([Si1r_a_ij(1,ii), Si1r_b_ij(1,ii)], [Si1r_a_ij(3,ii), Si1r_b_ij(3,ii)], 'Color', 'red');
-% end
+
+subplot(2,1,2)
+plot(nx, nz, 'o');
+xlabel('x');
+ylabel('z');
+title('Ellipse and chords rotated');
+hold on;
+for ii = 1 : size(Si1r_b_ij,2)
+  line([Si1r_a_ij(1,ii), Si1r_b_ij(1,ii)], [Si1r_a_ij(3,ii), Si1r_b_ij(3,ii)], 'Color', 'red');
+end
+
+
 
 a = coefficients(1);
 b = coefficients(2);
